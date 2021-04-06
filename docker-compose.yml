@@ -5,8 +5,8 @@ services:
       context: ./api
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
-    container_name: node-backend
+      - "8081:8081"
+    container_name: suhi-backend
     volumes:
       - ./api:/usr/src/app/api
       - /usr/src/app/api/node_modules
@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    container_name: vue-frontend
+    container_name: suhi-frontend
     volumes:
       - ./client:/usr/src/app/client
       - /usr/src/app/client/node_modules
