@@ -1,0 +1,5 @@
+{
+    "userDBURl": "http://localhost:8081/user",
+    "streamsDBURl": "http://localhost:8081/streams"
+  
+}
