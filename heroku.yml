@@ -2,6 +2,3 @@ build:
   docker:
     web: api/Dockerfile.api
     web: client/Dockerfile.client
-run:
-   web: node server.js
-   web: http-server dist/
