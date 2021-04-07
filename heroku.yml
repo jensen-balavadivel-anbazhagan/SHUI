@@ -1,5 +1,4 @@
 build:
  docker:
-   web: ./docker-compose.yml
-run:
- web: docker-compose -f docker-compose.yml up
+   web: ./Dockerfile.client
+  worker:./api/Dockerfile.api

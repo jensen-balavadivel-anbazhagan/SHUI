@@ -3,7 +3,7 @@ services:
   nodejs-backend:
     build:
       context: ./api
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.api
     ports:
       - "8081:8081"
     container_name: suhi-backend
@@ -13,7 +13,7 @@ services:
   vuejs-client:
     build:
       context: ./client
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.client
     ports:
       - "8080:8080"
     container_name: suhi-frontend
