@@ -4,7 +4,7 @@
   "description": "backend api for the SUHI project",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Bala",
   "license": "ISC",
