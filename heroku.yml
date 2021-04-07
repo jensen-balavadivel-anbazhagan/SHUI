@@ -1,6 +1,4 @@
 build:
- docker:
-   web: ./Dockerfile.client
-  worker:./api/Dockerfile.api
-  run:
- web: http-server dist/
+  docker:
+    nodejs-backend: api/Dockerfile.api
+    vuejs-client: client/Dockerfile.client

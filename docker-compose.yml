@@ -7,6 +7,8 @@ services:
     ports:
       - "8081:8081"
     container_name: suhi-backend
+    env_file: 
+      - ./api/.env
     volumes:
       - ./api:/usr/src/app/api
       - /usr/src/app/api/node_modules
