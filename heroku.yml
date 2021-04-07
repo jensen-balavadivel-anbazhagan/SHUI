@@ -4,4 +4,4 @@ build:
     client: client/Dockerfile.client
 run:
     api: npm start
-    client: http-server dist/
+    client: npm run serve

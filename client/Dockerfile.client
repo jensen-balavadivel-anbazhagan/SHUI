@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 
 # The /app directory should act as the main application directory
-WORKDIR /usr/src/app/client
+WORKDIR /app/client
 
 COPY package*.json ./
 
@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD [ "http-server", "dist" ]
+CMD [ "npm", "run", "serve" ]
