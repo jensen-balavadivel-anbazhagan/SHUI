@@ -1,4 +1,4 @@
 build:
   docker:
-    nodejs-backend: api/Dockerfile.api
-    vuejs-client: client/Dockerfile.client
+    web: api/Dockerfile.api
+    web: client/Dockerfile.client
