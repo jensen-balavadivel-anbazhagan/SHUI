@@ -1,4 +1,7 @@
 build:
   docker:
-    web: api/Dockerfile.api
-    web: client/Dockerfile.client
+    api: api/Dockerfile.api
+    client: client/Dockerfile.client
+run:
+    api: npm start
+    client: http-server dist/
