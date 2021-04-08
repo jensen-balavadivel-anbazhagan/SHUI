@@ -1,11 +1,13 @@
 FROM node:12
 
+# The /app directory should act as the main application directory
 WORKDIR /usr/src/app/api
 
 COPY package*.json ./
 
 RUN npm install
 
+# Copy or project directory (locally) in the current directory of our docker image (/app)
 COPY . .
 
 RUN npm run build
