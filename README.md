@@ -11,11 +11,17 @@ Enter **docker-compose up --build** to build and start image / containers.
 If need to start up the application seperately then follow the below steps
 
 **To start client**
+
 cd client
+
 npm install - To install the necessary libraries required only the first time
+
 npm run serve
 
 **To start api**
+
 cd api
+
 npm install - To install the necessary libraries required only the first time
+
 node server.js
