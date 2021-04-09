@@ -16,7 +16,7 @@ export default new Vuex.Store({
   mutations: {
     updateToken(state, token) {
       state.token = token;
-      localStorage.setItem('token', token)
+      sessionStorage.setItem('token', token)
     },
     displayStreams(state, streams) {
       state.streams = streams;
@@ -34,20 +34,12 @@ export default new Vuex.Store({
     deleteStream(state, id) {
       const index = state.streams.find((stream) => stream.id === id)
       state.streams.splice(index, 1)
-      console.log(this.state.streams)
     },
     deleteAllStreams(state) {
       state.streams = []
     },
-    addTag(state, newTag) {
-      state.tags.push(newTag);
-    },
     displayTags(state, tags) {
       state.tags = tags
-    },
-    deleteTag(state, tagIndex) {
-      state.tags.splice(tagIndex, 1)
-      console.log(this.state.tags)
     },
     deleteAllTags(state) {
       state.tags = []
@@ -55,7 +47,6 @@ export default new Vuex.Store({
   },
   actions: {
     async registerUser(ctx, userDetails) {
-      console.log(userDetails)
       const response = await fetch(config.userDBURl+'/register', {
         method: 'POST',
         body: JSON.stringify(userDetails),
@@ -65,11 +56,9 @@ export default new Vuex.Store({
       });
 
       const data = await response.json();
-      console.log(data)
       ctx.commit('registerUser', data.userName);
     },
     async login(ctx, userDetails) {
-      console.log(userDetails)
       const response = await fetch(config.userDBURl+'/login', {
         method: 'POST',
         body: JSON.stringify(userDetails),
@@ -78,9 +67,10 @@ export default new Vuex.Store({
         }
       });
 
+      if(response.status == 200) {
       const data = await response.json();
-      console.log(data)
       ctx.commit('updateToken', data.token);
+    }
     },
     async deleteUser(ctx) {
       const response = await fetch(config.userDBURl+'/userDelete', {
@@ -91,7 +81,6 @@ export default new Vuex.Store({
         }
       });
       const data = await response.json();
-      console.log(data)
       ctx.commit('deleteUser', data.message);
     },
     
@@ -104,11 +93,9 @@ export default new Vuex.Store({
         }
       });
       const data = await response.json();
-      console.log(data)
       ctx.commit('displayStreams', data.streams);
     },
     async addStream(ctx, newStream) {
-      console.log(newStream)
       const response = await fetch(config.streamsDBURl+'/streams', {
         method: 'POST',
         body: JSON.stringify(newStream),
@@ -119,7 +106,6 @@ export default new Vuex.Store({
       });
 
       const data = await response.json();
-      console.log(data)
       ctx.commit('addStream', data.newStream);
     },
     async deleteStream(ctx, streamId) {
@@ -133,7 +119,6 @@ export default new Vuex.Store({
       });
 
       const data = await response.json();
-      console.log(data)
       ctx.commit('deleteStream', data.id);
     },
     async deleteAllStreams(ctx) {
@@ -146,7 +131,6 @@ export default new Vuex.Store({
       });
 
       const data = await response.json();
-      console.log(data)
       ctx.commit('deleteAllStreams', data.message);
     },
 
@@ -160,8 +144,7 @@ export default new Vuex.Store({
         }
       })
       const data = await response.json();
-      console.log(data)
-      ctx.commit('addTag', data.newTag)
+      ctx.commit('displayTags', data.newTag)
     },
     async loadTags(ctx) {
       const response = await fetch(config.userDBURl+'/tags', {
@@ -172,7 +155,7 @@ export default new Vuex.Store({
         }
       });
       const data = await response.json();
-      console.log(data)
+      console.log(JSON.stringify(data.tags));
       ctx.commit('displayTags', data.tags);
     },
     async deleteTag(ctx, tagInfo) {
@@ -185,8 +168,7 @@ export default new Vuex.Store({
         }
       });
       const data = await response.json();
-      console.log(data)
-      ctx.commit('deleteTag', data.index);
+      ctx.commit('displayTags', data.tags);
     },
     async deleteAllTags(ctx) {
       const response = await fetch(config.userDBURl+'/tags', {
@@ -197,7 +179,6 @@ export default new Vuex.Store({
         }
       });
       const data = await response.json();
-      console.log(data)
       ctx.commit('deleteAllTags', data.message);
     }
 

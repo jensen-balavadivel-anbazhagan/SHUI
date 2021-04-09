@@ -1,24 +1,36 @@
 <template>
 <div class="stream-page">
-  <img class="logo-top" alt="logo s" src="../assets/logo.png" @click="toggleView = !toggleView">
+   <div class="navbar-section">
+       <p v-if="userDeleted === true" class="register-user">You no longer exist in the SHUI system!</p>
+  <img v-if="userDeleted === false" class="logo-top" alt="logo s" src="../assets/logo.png" @click="toggleView = !toggleView">
+   <span  v-if="userDeleted === false"
+      class="user-action"
+      @click="logout">
+    <font-awesome-icon icon="user" />
+    </span>
+   </div>
   <stream-tag v-if="toggleView"></stream-tag>
   <div class="header-section">
-
-     <h1>All avilable streams</h1>
-     <button @click="deleteUser">Delete user</button>
+     <h1>Hello there!</h1>
+      <h2 v-if="!streams.length">
+        You dont follow any channels
+      </h2>
+      <h2 v-else>Your streams</h2>
   </div>
   <div class="stream-body">
-
+  
   <stream-view v-for="stream in streams" :key="stream.id" 
   :title="stream.title"
   :description="stream.description"
   :id="stream.id"
-  :date="stream.date" >
+  :date="stream.date"
+  :tags="stream.tags"
+  :userName="stream.userName" >
   </stream-view>
   </div>
   <div class="streampage-buttons">
     <img class="logo-top" alt="Add new Stream" src="../assets/edit.png" @click="goToAddStream">
-  <button @click="deleteAllStreams">Delete All Streams</button>
+    <button @click="deleteUser">Delete user</button>
   </div>
   <footer-section></footer-section>
 </div>
@@ -38,6 +50,7 @@ export default {
   data(){
     return{
       toggleView:false,
+      userDeleted:false,
     }
   },
   methods:{
@@ -49,7 +62,15 @@ export default {
     },
     deleteUser(){
       this.$store.dispatch('deleteUser');
-      this.$router.push('/login')
+      sessionStorage.removeItem("token");
+       this.userDeleted=true;
+      setTimeout(()=>{
+               this.$router.push('/login');
+            },1000)
+    },
+    logout() {
+      sessionStorage.removeItem("token");
+      location.reload();
     }
 
   },
@@ -60,6 +81,7 @@ export default {
     },
   mounted(){
     this.$store.dispatch('loadStreams');
+       this.$store.dispatch('loadTags')
   }
 
 }
@@ -85,6 +107,13 @@ export default {
 .header-section >button{
   width:100px;
 }
+
+.header-section >h2 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-top: 2rem ;
+    margin-left: 2px;
+  }
 .streampage-buttons{
   display:flex;
   width:80%;
@@ -94,7 +123,7 @@ export default {
 stream-tag{
   width:100%;
   height:500px;
-  z-index:99;
+ padding-left: 400px;
 }
 
 button{
@@ -123,9 +152,18 @@ button:hover{
   flex-direction:column;
   margin:0 auto;
 }
+
 stream-view{
   width:100%;
   height:100px;
   border:2px solid orange;
 }
+span.user-action {
+    color: #fff;
+    padding: 10px;
+    font-size: 1.3rem;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-left: 80%;
+  }
 </style>

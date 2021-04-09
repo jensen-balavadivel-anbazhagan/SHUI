@@ -1,0 +1,11 @@
+{
+  "streams": [],
+  "users": [
+    {
+      "userName": "test",
+      "email": "test@test.com",
+      "password": "$2a$10$5m.1zH2XNurBGu9MlRMMner/22Xq./qlnrBuMtUKDIZVXU.TIi3Wi",
+      "uuid": "b38f795d-113e-4ea6-a28d-d1e19302e80a"
+    }
+  ]
+}

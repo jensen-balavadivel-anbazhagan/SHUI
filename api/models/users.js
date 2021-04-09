@@ -48,21 +48,44 @@ module.exports = {
     },
     async addtag(inputData, userInfo) {
         const user = await db.findUserByuuid(userInfo.uuid);
-            const newuserInfo = db.updateData('users',tags, { tagName: inputData.tagName, id: new Date().getTime() })
-            return newuserInfo > 1
+        let tag = {
+            "id" : new Date().toUTCString(),
+            "tagName" : inputData.tagName
+        }
+        let tags = [];
+        if(user.tags != 'undefined' && user.tags != null && user.tags.length >0) {
+            user.tags.forEach(userTag =>{
+                tags.push(userTag)
+            });
+            tags.push(tag);
+    } else {
+        tags.push(tag);
+    }
+    console.log("tags to add:" + JSON.stringify(tags));
+            const newuserInfo = db.updateUserTags('users',userInfo.uuid, tags)
+            return newuserInfo;
     },
     async getTags(userInfo) {
         const user = await db.findUserByuuid(userInfo.uuid);
-        return user
+        return user;
     },
     async removeTag(body, userInfo) {
-       
-        const tagRemove = await userDb.update({ uuid: userInfo.uuid }, { $pop: { tags: body.id } })
-        return tagRemove == 'undefined' || tagRemove == null;
+         const user = await db.findUserByuuid(userInfo.uuid);
+         const tags = [];
+         if(user.tags != 'undefined' && user.tags != null) {
+            user.tags.forEach(tag => {
+                if(tag.id != body.id) {
+                    tags.push(tag);
+                }
+            });
+         }
+         console.log(JSON.stringify(tags));
+        const tagRemove = await db.updateUserTags('users',userInfo.uuid, tags )
+        return await db.findUserByuuid(userInfo.uuid).tags;
     },
     async removeAllTags(userInfo) {
         const user = await db.findUserByuuid(userInfo.uuid);
-        const deleteTag = db.updateData('users',tags, {})
+        const deleteTag = db.updateUserTags('users',userInfo.uuid,{})
         return deleteTag == 'undefined' || deleteTag == null;
     },
     async deleteUser(userInfo) {

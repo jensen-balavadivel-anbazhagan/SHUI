@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "backend api for the SUHI project",
+  "description": "backend api for the SHUI project",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"

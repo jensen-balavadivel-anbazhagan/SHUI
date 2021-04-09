@@ -3,10 +3,10 @@ services:
   nodejs-backend:
     build:
       context: ./api
-      dockerfile: app/Dockerfile.api
+      dockerfile: Dockerfile.api
     ports:
       - "8081:8081"
-    container_name: suhi-backend
+    container_name: shui-backend
     env_file: 
       - ./api/.env
     volumes:
@@ -15,10 +15,10 @@ services:
   vuejs-client:
     build:
       context: ./client
-      dockerfile: client/Dockerfile.client
+      dockerfile: Dockerfile.client
     ports:
       - "8080:8080"
-    container_name: suhi-frontend
+    container_name: shui-frontend
     volumes:
       - ./client:/usr/src/app/client
       - /usr/src/app/client/node_modules
