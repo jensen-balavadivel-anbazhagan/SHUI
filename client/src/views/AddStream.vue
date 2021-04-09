@@ -5,7 +5,7 @@
       </div>
      
       <add-stream></add-stream>
-      <footer-section></footer-section>
+      <footer-section style="width:100%"></footer-section>
   </div>
 </template>
 

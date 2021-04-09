@@ -16,13 +16,15 @@ module.exports = {
             if(availableStreams != 'undefined' && availableStreams != null) {
             idVal = availableStreams.length+1;
         }
-
+        let tags = body.inputTag;
+       
             const newStream = {
                 title: body.title,
                 uuid: userInfo.uuid,
                 description: encryptedDescription,
                 date: timeStamp,
-                id: idVal
+                id: idVal,
+                tags:tags
             }
             console.log("newStream: ",newStream)
             return await db.createData('streams', newStream);
@@ -30,6 +32,7 @@ module.exports = {
 
     },
     async getStreams(userInfo) {
+        const user = db.findUserByuuid(userInfo.uuid);
         const streams = db.getStreamsByuuid(userInfo.uuid )
         const decryptStreams = streams.map(stream => {
             const decryptDescription = convertToText(stream.description)
@@ -39,6 +42,8 @@ module.exports = {
                 description: decryptDescription,
                 date: stream.date,
                 id: stream.id,
+                tags: stream.tags,
+                userName: user.userName
             }
             console.log("streamData: ",streamData)
             return streamData

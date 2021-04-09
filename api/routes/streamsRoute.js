@@ -13,7 +13,7 @@ router.post('/streams', verifyToken.authorize, async (req, res) => {
         })
     } else {
         res.status(404).json({
-            error: "Not authorized"
+            error: "No Streams available"
         })
     }
 })
@@ -27,8 +27,8 @@ router.get('/streams', verifyToken.authorize, async (req, res) => {
 
         })
     } else {
-        res.status(400).json({
-            message: 'Not authorized'
+        res.status(404).json({
+            message: 'No Streams available'
         })
     }
 
