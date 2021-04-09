@@ -27,12 +27,14 @@ const routes = [
   {
     path: '/streams',
     name: 'Streams',
-    component: Streams
+    component: Streams,
+    meta: { requiresAuth: true },
   },
   {
     path: '/addstream',
     name: 'AddStream',
-    component: AddStream
+    component: AddStream,
+    meta: { requiresAuth: true },
   },
 
 ]
@@ -42,5 +44,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const token = sessionStorage.getItem("token");
+  console.log("token" + token);
+  if (to.matched.some((route) => route.meta.requiresAuth && !token)) {
+    next({ name: "Login" });
+  } else {
+    next();
+  }
+});
 
 export default router

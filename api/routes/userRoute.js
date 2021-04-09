@@ -38,11 +38,10 @@ router.post('/register', async (req, res) => {
 router.post('/addtag', verifyToken.authorize, async (req, res) => {
     if (req.user) {
         const user = await User.addtag(req.body, req.user)
-        const newUser = await User.findUserByuuid(req.user);
         res.status(200).json({
             message: "new tag has been added!!",
             newTag: {
-                tagName: req.body.tagName
+                tagName: user.tags
             }
         })
     } else {
@@ -72,6 +71,7 @@ router.delete('/tag', verifyToken.authorize, async (req, res) => {
         const tagData = await User.removeTag(req.body, req.user)
         res.status(200).json({
             message: "tag is deleted from tag array",
+            tags: tagData
         })
     } else {
         res.status(400).json({

@@ -6,9 +6,8 @@
         <div class="stream-section">
            <div class="stream-description">
            <p>{{ description}}</p>
-           <button @click="deleteStream(id)">Delete</button>
            </div>
-          <p class="stream-title"><img class="title-bar" alt="-" src="@/assets/titleBar.png">{{ title }}</p>
+          <p class="stream-user"> -{{ userName }}</p>
        </div>
        <div>
         <div class="tag-section">
@@ -26,7 +25,7 @@
 import TagView from '../formComponents/TagView.vue'
 export default {
   name: "StreamView",
-  props: ["id", "title", "description","date"],
+  props: ["id", "title", "description","date","tags", "userName"],
   components:{
     'tag-view':TagView
   },
@@ -44,11 +43,6 @@ export default {
       this.$store.dispatch('deleteStream',streamId)
     }
   },
-  computed: {
-        tags() {
-            return this.$store.state.tags;
-        },      
-    },
   mounted(){
     this.$store.dispatch('loadTags')
   }
@@ -97,7 +91,7 @@ font-size: 16px;
 line-height: 150%;
 color: #000000;
 }
- .stream-title{
+ .stream-user{
   width: 297px;
 height: 20px;
 font-family: PT Sans;
@@ -108,7 +102,7 @@ line-height: 150%;
 color: #000000;
 
 }
-.stream-title .title-bar{
+.stream-user .title-bar{
 width: 12px;
 height: 1px;
 align-content: center;
@@ -118,7 +112,6 @@ justify-self: center;
       float:left;
       width: 0;
       height: 0;
-      margin-left:285px;
       border-top: 25px solid white;
       border-right: 20px solid transparent;
       box-shadow:2px 0px 0px 2px rgba(0,0,0,0.1);   
@@ -138,5 +131,13 @@ color: #00B2FF;
 }
 tag-view{
   width:85%;
+   display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 16px;
+  position: absolute;
+  width: 255px;
+  height: 32px;
+  margin-left:285px;
 }
 </style>
